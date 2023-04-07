@@ -40,7 +40,7 @@ public class Restaurant {
     @Max(value = 250, message = "Escroc")
     private float prixMoyen;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private Set<Horaire> horaires;
 
 }

@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @NoArgsConstructor
 @Service
@@ -33,10 +31,13 @@ public class Mapper {
         result.setPrixMoyen(p_restau.getPrixMoyen());
         result.setAdresse(p_restau.getAdresse());
         result.setHoraires(new HashSet<Horaire>());
-        for (String horaire : p_restau.getHoraires()) {
-            Optional<Horaire> h = horaireRepository.findByValeur(horaire);
-            if (h.isPresent()) {
-                result.getHoraires().add(h.get());
+        // le if permet d'éviter le nullPointerException
+        if (p_restau.getHoraires() != null) {
+            for (String horaire : p_restau.getHoraires()) {
+                Optional<Horaire> h = horaireRepository.findByValeur(horaire);
+                if (h.isPresent()) {
+                    result.getHoraires().add(h.get());
+                }
             }
         }
         return result;

@@ -56,7 +56,9 @@ public class RestaurantController {
         return new ResponseEntity<>(restau, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
+    // ----- CRUD AVEC LES DTO ----- //
+
+    @PostMapping("/addDTO")
     @Operation(summary = "Ajouter un restaurant", description = "")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "CREATED"),
@@ -73,7 +75,7 @@ public class RestaurantController {
         return new ResponseEntity<>(restau, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/updateDTO")
     @Operation(summary = "Update un restaurant", description = "")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "CREATED"),
@@ -90,14 +92,58 @@ public class RestaurantController {
         return new ResponseEntity<>(restau, HttpStatus.CREATED);
     }
 
-    @PutMapping("/delete")
+    @PutMapping("/deleteDTO")
     @Operation(summary = "Delete un restaurant", description = "")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "DELETED")
     })
     public ResponseEntity<Object> deleteRestaurant(@RequestBody RestaurantDTO p_restauDTO) {
         restaurantRepository.deleteById(p_restauDTO.getId());
-        return new ResponseEntity<>(p_restauDTO, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // ----- CRUD SANS LES DTO ----- //
+
+    @PostMapping("/add")
+    @Operation(summary = "Ajouter un restaurant", description = "")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "CREATED"),
+            @ApiResponse(responseCode = "406", description = "Ne pas renseigner d'ID")
+    })
+    public ResponseEntity<Object> addRestaurant(@RequestBody Restaurant p_restau) {
+        // on va empêcher l'utilisateur de mettre un id dans sa requête, sinon il fait une instruction update
+        if (p_restau.getId() != 0)
+        {
+            return new ResponseEntity<>("Merci de ne pas renseigner l'id.", HttpStatus.NOT_ACCEPTABLE);
+        }
+        Restaurant restau = this.restaurantService.addRestaurant(p_restau);
+        return new ResponseEntity<>(restau, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/update")
+    @Operation(summary = "Update un restaurant", description = "")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "CREATED"),
+            @ApiResponse(responseCode = "406", description = "L'update demandé ne correspond à aucun ID en base")
+    })
+    public ResponseEntity<Object> updateRestaurant(@RequestBody Restaurant p_restau) {
+        Optional<Restaurant> restauBdd = restaurantRepository.findById(p_restau.getId());
+        if (restauBdd.isEmpty())
+        {
+            return new ResponseEntity<>("Merci de renseigner un ID valide.", HttpStatus.NOT_ACCEPTABLE);
+        }
+        Restaurant restau = restaurantRepository.save(p_restau);
+        return new ResponseEntity<>(restau, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/delete")
+    @Operation(summary = "Delete un restaurant", description = "")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "DELETED")
+    })
+    public ResponseEntity<Object> deleteRestaurant(@RequestBody Restaurant p_restau) {
+        restaurantRepository.deleteById(p_restau.getId());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

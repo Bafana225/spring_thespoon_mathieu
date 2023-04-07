@@ -46,6 +46,20 @@ public class ReservationController {
         return new ResponseEntity<>(resa, HttpStatus.OK);
     }
 
+    @GetMapping("/filtreIdRestaurant/{id}")
+    @Operation(summary = "Afficher une réservation", description = "Afficher une réservation par son id.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND")
+    })
+    public ResponseEntity<Object> findReservationsByIdRestaurant(@PathVariable("id") Long id) {
+        List<Reservation> resa = this.reservationService.getReservationsByIdRestaurant(id);
+        if (resa.isEmpty()) {
+            return new ResponseEntity<>("Merci de renseigner un ID valide.", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(resa, HttpStatus.OK);
+    }
+
     @GetMapping("/all")
     @Operation(summary = "Afficher les réservations", description = "Afficher les réservations")
     @ApiResponses(value = {
@@ -56,7 +70,9 @@ public class ReservationController {
         return new ResponseEntity<>(resa, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
+    // ----- CRUD AVEC LES DTO ----- //
+
+    @PostMapping("/addDTO")
     @Operation(summary = "Ajouter une réservation", description = "Champs obligatoires")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "CREATED"),
@@ -73,7 +89,7 @@ public class ReservationController {
         return new ResponseEntity<>(resa, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/updateDTO")
     @Operation(summary = "Update une réservation", description = "")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "CREATED"),
@@ -90,7 +106,7 @@ public class ReservationController {
         return new ResponseEntity<>(resa, HttpStatus.CREATED);
     }
 
-    @PutMapping("/delete")
+    @PutMapping("/deleteDTO")
     @Operation(summary = "Delete un restaurant", description = "")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "DELETED")
