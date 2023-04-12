@@ -1,4 +1,3 @@
---CREATION DES TABLES
 CREATE TABLE IF NOT EXISTS Restaurant (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(32) NOT NULL,
@@ -16,7 +15,7 @@ CREATE TABLE IF NOT EXISTS Restaurant_Horaire (
     FOREIGN KEY (horaire_id) REFERENCES Horaire(id) ON DELETE CASCADE
 );
 
--- INSERTIONS DES VALEURS
+-- INSERTIONS
 INSERT INTO Restaurant (nom, Adresse, nbrPlaces, pmr, prixMoyen) VALUES
   ('Le Jardin', '5 rue du Jardin', 50, true, 25.5),
   ('La Belle Époque', '15 avenue des Champs-Élysées', 100, false, 42.0),
