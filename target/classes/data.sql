@@ -1,3 +1,4 @@
+--CREATION DES TABLES
 CREATE TABLE IF NOT EXISTS Restaurant (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(32) NOT NULL,
@@ -7,15 +8,32 @@ CREATE TABLE IF NOT EXISTS Restaurant (
     prixMoyen FLOAT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Restaurant_Horaire (
-    restaurant_id INT NOT NULL,
-    horaire_id INT NOT NULL,
-    PRIMARY KEY (restaurant_id, horaire_id),
-    FOREIGN KEY (restaurant_id) REFERENCES Restaurant(id) ON DELETE CASCADE,
-    FOREIGN KEY (horaire_id) REFERENCES Horaire(id) ON DELETE CASCADE
+CREATE TABLE IF NOT EXISTS Horaire (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  horaire VARCHAR(20) NOT NULL
 );
 
--- INSERTIONS
+CREATE TABLE IF NOT EXISTS Restaurant_Horaire (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    restaurant_id INT NOT NULL,
+    horaire_id INT NOT NULL,
+    FOREIGN KEY (restaurant_id) REFERENCES Restaurant(id),
+    FOREIGN KEY (horaire_id) REFERENCES Horaire(id)
+);
+
+CREATE TABLE IF NOT EXISTS Reservation (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nbrAdultes INT NOT NULL,
+    nbrEnfants INT NOT NULL,
+    heureReservation_id INT NOT NULL,
+    restaurant_id INT NOT NULL,
+    FOREIGN KEY (heureReservation_id) REFERENCES Horaire(id),
+    FOREIGN KEY (restaurant_id) REFERENCES Restaurant(id)
+);
+
+
+
+-- INSERTIONS DES VALEURS
 INSERT INTO Restaurant (nom, Adresse, nbrPlaces, pmr, prixMoyen) VALUES
   ('Le Jardin', '5 rue du Jardin', 50, true, 25.5),
   ('La Belle Époque', '15 avenue des Champs-Élysées', 100, false, 42.0),
@@ -44,3 +62,6 @@ INSERT INTO Restaurant_Horaire (restaurant_id, horaire_id) VALUES
   (5, 1),
   (5, 3),
   (5, 4);
+
+  INSERT INTO Reservation (nbrAdultes, nbrEnfants, heureReservation_id, restaurant_id)
+  VALUES (2, 1, 1, 1), (4, 2, 2, 2), (3, 0, 3, 1), (1, 1, 4, 3), (2, 0, 5, 4);
