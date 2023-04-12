@@ -90,21 +90,24 @@ public class ReservationController {
     }
 
     @PutMapping("/updateDTO")
-    @Operation(summary = "Update une réservation", description = "")
+    @Operation(summary = "Update une réservation")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "CREATED"),
             @ApiResponse(responseCode = "406", description = "L'update demandé ne correspond à aucun ID en base")
     })
     public ResponseEntity<Object> updateReservation(@RequestBody ReservationDTO p_resaDTO) {
-        Optional<Reservation> resaBdd = reservationRepository.findById(p_resaDTO.getId());
-        if (resaBdd.isEmpty())
-        {
+        Optional<Reservation> reservationOptional = reservationRepository.findById(p_resaDTO.getId());
+
+        if (reservationOptional.isEmpty()) {
             return new ResponseEntity<>("Merci de renseigner un ID valide.", HttpStatus.NOT_ACCEPTABLE);
         }
-        Reservation resa = reservationRepository.save(
-                mapper.reservationDTOtoReservation(p_resaDTO));
-        return new ResponseEntity<>(resa, HttpStatus.CREATED);
+
+        Reservation reservation = mapper.reservationDTOtoReservation(p_resaDTO);
+        Reservation savedReservation = reservationRepository.save(reservation);
+
+        return new ResponseEntity<>(savedReservation, HttpStatus.CREATED);
     }
+
 
     @PutMapping("/deleteDTO")
     @Operation(summary = "Delete un restaurant", description = "")
