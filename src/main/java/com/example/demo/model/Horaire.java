@@ -17,10 +17,10 @@ public class Horaire {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String valeur;
+    private String horaire;
 
-    public Horaire(String valeur) {
-        this.valeur = valeur;
+    public Horaire(String horaire) {
+        this.horaire = horaire;
     }
 
 }

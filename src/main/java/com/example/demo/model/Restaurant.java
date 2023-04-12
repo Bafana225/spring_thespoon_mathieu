@@ -41,6 +41,6 @@ public class Restaurant {
     private float prixMoyen;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
-    private Set<Horaire> horaires;
+    private Set<Horaire> horaire;
 
 }

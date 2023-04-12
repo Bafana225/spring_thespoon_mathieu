@@ -47,26 +47,26 @@ class ReservationServiceTests {
 		reservationRepository.deleteAll();
 		restaurantRepository.deleteAll();
 
-		this.h1 = this.horaireRepository.findByValeur("11h - 12h").get();
-		this.h2 = this.horaireRepository.findByValeur("03h - 04h").get();
-		this.h3 = this.horaireRepository.findByValeur("14h - 15h").get();
+		this.h1 = this.horaireRepository.findByHoraire("11h - 12h").get();
+		this.h2 = this.horaireRepository.findByHoraire("03h - 04h").get();
+		this.h3 = this.horaireRepository.findByHoraire("14h - 15h").get();
 
 		this.restau1 = new Restaurant();
 		this.restau1.setNom("Le restau 1");
 		this.restau1.setPrixMoyen(50);
-		this.restau1.setHoraires(new HashSet<Horaire>(Set.of(this.h1, this.h2)));
+		this.restau1.setHoraire(new HashSet<Horaire>(Set.of(this.h1, this.h2)));
 		restaurantRepository.save(this.restau1);
 
 		this.restau2 = new Restaurant();
 		this.restau2.setNom("Le restau 2");
 		this.restau2.setPrixMoyen(60);
-		this.restau2.setHoraires(new HashSet<Horaire>(Set.of(this.h3)));
+		this.restau2.setHoraire(new HashSet<Horaire>(Set.of(this.h3)));
 		restaurantRepository.save(this.restau2);
 
 		this.restau3 = new Restaurant();
 		this.restau3.setNom("Le restau 3");
 		this.restau3.setPrixMoyen(70);
-		this.restau3.setHoraires(new HashSet<Horaire>(Set.of(this.h3)));
+		this.restau3.setHoraire(new HashSet<Horaire>(Set.of(this.h3)));
 		restaurantRepository.save(this.restau3);
 
 		this.resa1 = new Reservation();

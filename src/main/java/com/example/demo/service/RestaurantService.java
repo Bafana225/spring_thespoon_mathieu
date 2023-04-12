@@ -24,7 +24,7 @@ public class RestaurantService {
         // les définir dans une fonction
 
         // la fonction contains() retourne true si la liste contient l'elt, false sinon
-        return restaurant.getHoraires().contains(horaire);
+        return restaurant.getHoraire().contains(horaire);
     }
 
 }

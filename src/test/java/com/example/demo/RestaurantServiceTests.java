@@ -30,12 +30,12 @@ class RestaurantServiceTests {
 
 	@BeforeEach
 	void contextLoads() {
-		this.h1 = this.horaireRepository.findByValeur("11h - 12h").get();
-		this.h2 = this.horaireRepository.findByValeur("12h - 13h").get();
-		this.h2 = this.horaireRepository.findByValeur("14h - 15h").get();
+		this.h1 = this.horaireRepository.findByHoraire("11h - 12h").get();
+		this.h2 = this.horaireRepository.findByHoraire("12h - 13h").get();
+		this.h2 = this.horaireRepository.findByHoraire("14h - 15h").get();
 		this.restau1 = new Restaurant();
 		this.restau1.setNom("Le bon restaurant");
-		this.restau1.setHoraires(new HashSet<Horaire>(Set.of(this.h1, this.h2)));
+		this.restau1.setHoraire(new HashSet<Horaire>(Set.of(this.h1, this.h2)));
 	}
 
 	@Test

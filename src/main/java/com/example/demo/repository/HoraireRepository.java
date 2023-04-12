@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface HoraireRepository extends JpaRepository<Horaire, Long> {
 
-    public Optional<Horaire> findByValeur(String valeur);
+    public Optional<Horaire> findByHoraire(String horaire);
 }

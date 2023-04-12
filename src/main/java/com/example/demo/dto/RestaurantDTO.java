@@ -32,5 +32,5 @@ public class RestaurantDTO {
     private String Adresse;
 
     // ici au lieu d'avoir une liste de Horaires j'ai une liste de String
-    private List<String> horaires;
+    private List<String> horaire;
 }

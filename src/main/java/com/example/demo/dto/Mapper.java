@@ -30,13 +30,13 @@ public class Mapper {
         result.setPmr(p_restau.isPmr());
         result.setPrixMoyen(p_restau.getPrixMoyen());
         result.setAdresse(p_restau.getAdresse());
-        result.setHoraires(new HashSet<Horaire>());
+        result.setHoraire(new HashSet<Horaire>());
         // le if permet d'éviter le nullPointerException
-        if (p_restau.getHoraires() != null) {
-            for (String horaire : p_restau.getHoraires()) {
-                Optional<Horaire> h = horaireRepository.findByValeur(horaire);
+        if (p_restau.getHoraire() != null) {
+            for (String horaire : p_restau.getHoraire()) {
+                Optional<Horaire> h = horaireRepository.findByHoraire(horaire);
                 if (h.isPresent()) {
-                    result.getHoraires().add(h.get());
+                    result.getHoraire().add(h.get());
                 }
             }
         }
@@ -48,7 +48,7 @@ public class Mapper {
         result.setId(p_resa.getId());
         result.setNbrAdultes(p_resa.getNbrAdultes());
         result.setNbrEnfants(p_resa.getNbrEnfants());
-        Optional<Horaire> h = horaireRepository.findByValeur(p_resa.getHeureReservation());
+        Optional<Horaire> h = horaireRepository.findByHoraire(p_resa.getHeureReservation());
         if (h.isPresent()) { result.setHeureReservation(h.get()); }
         Optional<Restaurant> restau = restaurantRepository.findById(p_resa.getRestaurant());
         if (restau.isPresent()) { result.setRestaurant(restau.get()); }
