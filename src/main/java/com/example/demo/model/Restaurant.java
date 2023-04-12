@@ -23,7 +23,7 @@ public class Restaurant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "nomRestaurant", length = 32)
+    @Column(length = 32)
     @NotBlank
     private String nom;
 

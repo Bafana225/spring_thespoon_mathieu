@@ -2,10 +2,10 @@
 CREATE TABLE IF NOT EXISTS Restaurant (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(32) NOT NULL,
-    Adresse VARCHAR(32),
-    nbrPlaces INT NOT NULL,
+    adresse VARCHAR(32),
+    nbr_places INT NOT NULL,
     pmr BOOLEAN NOT NULL,
-    prixMoyen FLOAT NOT NULL
+    prix_moyen FLOAT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Horaire (
@@ -23,23 +23,23 @@ CREATE TABLE IF NOT EXISTS Restaurant_Horaire (
 
 CREATE TABLE IF NOT EXISTS Reservation (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nbrAdultes INT NOT NULL,
-    nbrEnfants INT NOT NULL,
-    heureReservation_id INT NOT NULL,
+    nbr_adultes INT NOT NULL,
+    nbr_enfants INT NOT NULL,
+    heure_reservation_id INT NOT NULL,
     restaurant_id INT NOT NULL,
-    FOREIGN KEY (heureReservation_id) REFERENCES Horaire(id),
+    FOREIGN KEY (heure_reservation_id) REFERENCES Horaire(id),
     FOREIGN KEY (restaurant_id) REFERENCES Restaurant(id)
 );
 
 
 
 -- INSERTIONS DES VALEURS
-INSERT INTO Restaurant (nom, Adresse, nbrPlaces, pmr, prixMoyen) VALUES
-  ('Le Jardin', '5 rue du Jardin', 50, true, 25.5),
-  ('La Belle Époque', '15 avenue des Champs-Élysées', 100, false, 42.0),
-  ('Le Bon Vivant', '18 rue de la Paix', 80, true, 35.0),
-  ('Chez Gino', '10 rue du Commerce', 30, false, 18.5),
-  ('Le Petit Bistrot', '7 rue de la Gare', 40, true, 22.0);
+INSERT INTO Restaurant (nom, adresse, nbr_places, pmr, prix_moyen)
+VALUES ('Le Jardin', '5 rue du Jardin', 50, true, 25.5),
+       ('La Belle Époque', '15 avenue des Champs-Élysées', 100, false, 42.0),
+       ('Le Bon Vivant', '18 rue de la Paix', 80, true, 35.0),
+       ('Chez Gino', '10 rue du Commerce', 30, false, 18.5),
+       ('Le Petit Bistrot', '7 rue de la Gare', 40, true, 22.0);
 
 INSERT INTO Horaire (horaire) VALUES
   ('13h00-14h00'),
@@ -63,5 +63,5 @@ INSERT INTO Restaurant_Horaire (restaurant_id, horaire_id) VALUES
   (5, 3),
   (5, 4);
 
-  INSERT INTO Reservation (nbrAdultes, nbrEnfants, heureReservation_id, restaurant_id)
+  INSERT INTO Reservation (nbr_adultes, nbr_enfants, heure_reservation_id, restaurant_id)
   VALUES (2, 1, 1, 1), (4, 2, 2, 2), (3, 0, 3, 1), (1, 1, 4, 3), (2, 0, 5, 4);
