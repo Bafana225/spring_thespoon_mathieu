@@ -146,4 +146,22 @@ public class RestaurantController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /// TEST 'findRestaurantsByName'
+
+    @GetMapping("/find-by-nom/{nom}")
+    @Operation(summary = "Rechercher un restaurant par nom", description = "Rechercher un restaurant par nom.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND")
+    })
+    public ResponseEntity<List<Restaurant>> findRestaurantsByNom(@PathVariable("nom") String nom) {
+        List<Restaurant> restaurants = this.restaurantRepository.findByNomContainingIgnoreCase(nom);
+        if (restaurants.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(restaurants, HttpStatus.OK);
+    }
+
+
+
 }
