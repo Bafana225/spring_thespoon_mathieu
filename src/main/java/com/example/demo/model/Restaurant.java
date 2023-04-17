@@ -43,4 +43,7 @@ public class Restaurant {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private Set<Horaire> horaire;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reservation> reservations;
+
 }

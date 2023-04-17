@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.Mapper;
 import com.example.demo.dto.RestaurantDTO;
+import com.example.demo.model.Reservation;
 import com.example.demo.model.Restaurant;
 import com.example.demo.repository.RestaurantRepository;
 import com.example.demo.service.RestaurantService;
@@ -146,7 +147,7 @@ public class RestaurantController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    /// TEST 'findRestaurantsByName'
+    ///'findRestaurantsByName'
 
     @GetMapping("/find-by-nom/{nom}")
     @Operation(summary = "Rechercher un restaurant par nom", description = "Rechercher un restaurant par nom.")
@@ -162,6 +163,22 @@ public class RestaurantController {
         return new ResponseEntity<>(restaurants, HttpStatus.OK);
     }
 
+    @GetMapping("/reservations/{id}")
+    @Operation(summary = "Afficher les réservations d'un restaurant", description = "Afficher les réservations d'un restaurant.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND")
+    })
+    public ResponseEntity<List<Reservation>> findReservationsByRestaurantId(@PathVariable("id") long id) {
+        Optional<Restaurant> optionalRestaurant = this.restaurantRepository.findById(id);
+        if (optionalRestaurant.isPresent()) {
+            Restaurant restaurant = optionalRestaurant.get();
+            List<Reservation> reservations = restaurant.getReservations();
+            return new ResponseEntity<>(reservations, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
 
 }
