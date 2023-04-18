@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -43,7 +44,7 @@ public class Restaurant {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private Set<Horaire> horaire;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Reservation> reservations;
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Reservation> reservations = new ArrayList<>();
 
 }
