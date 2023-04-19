@@ -1,38 +1,49 @@
-package com.example.demo.model;
+package com.thespoon.TheSpoon.model;
 
+import com.example.demo.model.Restaurant;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@Table(name = "Reservation")
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-public class Reservation {
 
+public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_reservation", nullable = false)
     private long id;
 
-    private int nbrAdultes;
+    @Column
+    @NotBlank(message = "Le nombre d'adulte(s) est requis.")
+    private Integer nombreAdultes;
 
-    private int nbrEnfants;
+    @Column
+    @NotBlank(message = "Le nombre d'enfant(s) est requis.")
+    private Integer nombreEnfants;
 
-    @ManyToOne()
-    @NotNull
-    private Horaire heureReservation;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
-    private Restaurant restaurant;
+    /** ManyToOne Reservation --> Restaurant **/
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_restaurant")
+    private com.example.demo.model.Restaurant restaurants;
+
+    /** ManyToOne Reservation --> Horaire **/
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_horaire")
+    private com.example.demo.model.Horaire horaires;
+
+
+    /** Notes
+     * @NotNull vérifie simplement que la valeur d'un champ est non-nulle,
+     * @NotBlank vérifie que la valeur est non-nulle et non-vide
+     */
+
 }

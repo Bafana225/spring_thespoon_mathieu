@@ -9,5 +9,8 @@ import java.util.Optional;
 @Repository
 public interface HoraireRepository extends JpaRepository<Horaire, Long> {
 
-    public Optional<Horaire> findByHoraire(String horaire);
+    Horaire findHoraireById(Long id);
+
+    void deleteHoraireById(Long id);
+
 }

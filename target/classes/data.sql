@@ -21,6 +21,8 @@ CREATE TABLE IF NOT EXISTS Restaurant_Horaire (
     FOREIGN KEY (horaire_id) REFERENCES Horaire(id)
 );
 
+
+
 CREATE TABLE IF NOT EXISTS Reservation (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nbr_adultes INT NOT NULL,

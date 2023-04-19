@@ -8,4 +8,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     List<Restaurant> findByNomContainingIgnoreCase(String nom);
+
+    Restaurant findRestaurantById(Long id);
+
+    void deleteRestaurantById(Long id);
+
 }
